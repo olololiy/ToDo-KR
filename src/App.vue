@@ -1,12 +1,34 @@
 <template>
   <main>
-    <TaskInput
-        @create="createTask"
-    ></TaskInput>
-    <TaskList
-        :taskList="taskList"
-        @remove="removeTask"
-    ></TaskList>
+    <v-form>
+      <v-text-field
+          class="title"
+          label="title"
+          :value="title"
+          @input="title=$event.target.value"
+      >
+      </v-text-field>
+      <v-text-field
+          class="description"
+          label="description"
+          :value="body"
+          @input="body=$event.target.value"
+      >
+      </v-text-field>
+      <v-btn class="add-btn">
+        ADD
+      </v-btn>
+    </v-form>
+
+    <div class="task_list" v-for="task in tasks">
+      <v-card :title="task.title" :text="task.body" variant="outlined">
+        <v-card-actions>
+          <v-btn>Done</v-btn>
+          <v-btn>Delete</v-btn>
+        </v-card-actions>
+      </v-card>
+    </div>
+
   </main>
 </template>
 
@@ -24,17 +46,17 @@ export default {
   },
   data() {
     return {
-      taskList: []
+      tasks: [
+        {id: 1, title: "homework", body: 'do homework'},
+        {id: 2, title: "cleaning", body: 'do debug'},
+        {id: 3, title: "learning", body: 'do js'},
+      ],
+      title: '',
+      body: ''
     }
   },
   methods: { //поле
-    createTask(task) { //брал экземпляр из текущей модели
-      this.taskList.push(task)
-    },
-    removeTask(task) {
-      this.taskList = this.taskList.filter(p => p.id !== task.id)
-    }
-  }
+  },
 }
 </script>
 

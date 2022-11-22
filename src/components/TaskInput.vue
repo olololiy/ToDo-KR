@@ -22,9 +22,6 @@
 
 export default {
   props: {
-    props:{
-      modelValue:[String, Number],
-    },
 
   },
   methods: {
