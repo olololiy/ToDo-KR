@@ -15,7 +15,10 @@
           @input="body=$event.target.value"
       >
       </v-text-field>
-      <v-btn class="add-btn">
+      <v-btn
+          class="add-btn"
+          @click="addTask"
+      >
         ADD
       </v-btn>
     </v-form>
@@ -55,7 +58,17 @@ export default {
       body: ''
     }
   },
-  methods: { //поле
+  methods: {
+    addTask(){
+      let newTask = {
+        id: Date.now(),
+        title: this.title,
+        body: this.body
+      }
+      this.tasks.push(newTask)
+      this.title=''
+      this.body=''
+    }
   },
 }
 </script>
