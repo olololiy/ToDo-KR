@@ -27,7 +27,7 @@
       <v-card :title="task.title" :text="task.body" variant="outlined">
         <v-card-actions>
           <v-btn>Done</v-btn>
-          <v-btn>Delete</v-btn>
+          <v-btn @click="removeTask(task)">Delete</v-btn>
         </v-card-actions>
       </v-card>
     </div>
@@ -68,6 +68,9 @@ export default {
       this.tasks.push(newTask)
       this.title=''
       this.body=''
+    },
+    removeTask(task){
+      this.tasks = this.tasks.filter(p => p.id !== task.id)
     }
   },
 }
