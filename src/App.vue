@@ -4,15 +4,13 @@
       <v-text-field
           class="title"
           label="title"
-          :value="title"
-          @input="title=$event.target.value"
+          v-model="title"
       >
       </v-text-field>
       <v-text-field
           class="description"
           label="description"
-          :value="body"
-          @input="body=$event.target.value"
+          v-model="body"
       >
       </v-text-field>
       <v-btn
@@ -39,6 +37,7 @@
 import TaskCard from "@/components/TaskCard";
 import TaskInput from "@/components/TaskInput";
 import TaskList from "@/components/TaskList";
+import {ref, computed} from "vue";
 
 export default {
   name: 'App',
@@ -47,32 +46,61 @@ export default {
     TaskCard,
     TaskList
   },
-  data() {
-    return {
-      tasks: [
-        {id: 1, title: "homework", body: 'do homework'},
-        {id: 2, title: "cleaning", body: 'do debug'},
-        {id: 3, title: "learning", body: 'do js'},
-      ],
-      title: '',
-      body: ''
-    }
-  },
-  methods: {
-    addTask(){
+  setup(){
+    let tasks = ref([
+      {id: 1, title: "homework", body: 'do homework'},
+      {id: 2, title: "cleaning", body: 'do debug'},
+      {id: 3, title: "learning", body: 'do js'},
+    ]);
+    let title = ref('');
+    let body = ref('');
+    const addTask = () => {
       let newTask = {
         id: Date.now(),
-        title: this.title,
-        body: this.body
+        title: title.value,
+        body: body.value
       }
-      this.tasks.push(newTask)
-      this.title=''
-      this.body=''
-    },
-    removeTask(task){
-      this.tasks = this.tasks.filter(p => p.id !== task.id)
-    }
+      console.log(newTask)
+      tasks.value.push(newTask)
+      console.log("addTask")
+      title.value=''
+      body.value=''
+    };
+    const removeTask = task => {
+      console.log("removeTask")
+      console.log("до", tasks.value)
+      tasks.value = tasks.value.filter(p => p.id !== task.id)
+      console.log("после", tasks.value)
+    };
+    return{removeTask, addTask, tasks, title,body}
   },
+  //
+  // data() {
+  //   return {
+  //     tasks: [
+  //       {id: 1, title: "homework", body: 'do homework'},
+  //       {id: 2, title: "cleaning", body: 'do debug'},
+  //       {id: 3, title: "learning", body: 'do js'},
+  //     ],
+  //     title: '',
+  //     body: ''
+  //   }
+  // },
+  // methods: {
+  //   addTask(){
+  //     let newTask = {
+  //       id: Date.now(),
+  //       title: this.title,
+  //       body: this.body
+  //     }
+  //     this.tasks.push(newTask)
+  //     this.title=''
+  //     this.body=''
+  //   },
+  //   removeTask(task){
+  //     this.tasks = this.tasks.filter(p => p.id !== task.id)
+  //   }
+  // },
 }
 </script>
 
