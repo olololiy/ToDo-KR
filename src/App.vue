@@ -69,7 +69,7 @@ export default {
     const removeTask = task => {
       console.log("removeTask")
       console.log("до", tasks.value)
-      tasks.value = tasks.value.filter(p => p.id !== task.id)
+      tasks.value = tasks.value.filter(item => item.id !== task.id)
       console.log("после", tasks.value)
     };
     return{removeTask, addTask, tasks, title,body}
