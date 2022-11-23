@@ -22,18 +22,18 @@
     </v-form>
     <h4>в работе</h4>
     <div class="task_list" v-for="task of taskStore.tasks" >
-      <v-card :title="task.title" :text="task.body" variant="outlined" v-if="!task.status">
+      <v-card :title="task.title" :text="task.body" variant="outlined" v-if="!task.done">
         <v-card-actions>
-          <v-btn @click="taskStore.removeTask(task)">Done</v-btn>
+          <v-btn @click="taskStore.makeDone(task)">Done</v-btn>
           <v-btn @click="taskStore.removeTask(task)">Delete</v-btn>
         </v-card-actions>
       </v-card>
     </div>
     <h4>архив</h4>
     <div class="task_list" v-for="task of taskStore.tasks" >
-      <v-card :title="task.title" :text="task.body" variant="outlined" v-if="task.status">
+      <v-card :title="task.title" :text="task.body" variant="outlined" v-if="task.done">
         <v-card-actions>
-          <v-btn @click="taskStore.removeTask(task)">Done</v-btn>
+          <v-btn @click="taskStore.makeDone(task)">Done</v-btn>
           <v-btn @click="taskStore.removeTask(task)">Delete</v-btn>
         </v-card-actions>
       </v-card>

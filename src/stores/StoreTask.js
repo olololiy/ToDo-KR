@@ -4,10 +4,15 @@ import {computed, ref, watch} from "vue";
 export const useTaskStore = defineStore('taskStore',() => {
 
     const tasks = ref([
-        {id: 1, title: "homework", body: 'do homework', status: true},
-        {id: 2, title: "cleaning", body: 'do debug', status: false},
-        {id: 3, title: "learning", body: 'do js', status: false},
+        {id: 1, title: "homework", body: 'do homework', done: true},
+        {id: 2, title: "cleaning", body: 'do debug', done: false},
+        {id: 3, title: "learning", body: 'do js', done: false},
     ]);
+    const taskInLocalStorage = localStorage.getItem("tasks")
+    if (taskInLocalStorage){
+        tasks.value = JSON.parse(taskInLocalStorage)._value;
+        console.log(JSON.parse(taskInLocalStorage))
+    }
 
     const title = ref('');
     const body = ref('');
@@ -17,7 +22,7 @@ export const useTaskStore = defineStore('taskStore',() => {
             id: Date.now(),
             title: title.value,
             body: body.value,
-            status: false
+            done: false
         }
         console.log(newTask)
         tasks.value.push(newTask)
@@ -30,12 +35,14 @@ export const useTaskStore = defineStore('taskStore',() => {
         tasks.value = tasks.value.filter(item => item.id !== task.id)
     };
     const makeDone= task =>{
-        console.log("removeTask")
-        task.status = true
-        tasks.value = tasks.value.filter(item => item.id !== task.id )
+        task.done = true
+        console.log(tasks.value)
     }
+    watch(()=> tasks, (state) => {
+        localStorage.setItem('tasks', JSON.stringify(state))
+    },{deep: true})
 
-    return{removeTask, addTask, tasks, title,body}
+    return{removeTask, addTask, makeDone, tasks, title,body}
 
 
 })
