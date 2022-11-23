@@ -20,7 +20,6 @@
         ADD
       </v-btn>
     </v-form>
-<div>{{taskStore.tasks[1]}}</div>
     <div class="task_list" v-for="task of taskStore.tasks">
       <v-card :title="task.title" :text="task.body" variant="outlined">
         <v-card-actions>

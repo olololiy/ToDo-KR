@@ -1,12 +1,18 @@
 import {defineStore} from "pinia";
-import {computed, ref} from "vue";
+import {computed, ref, watch} from "vue";
 
 export const useTaskStore = defineStore('taskStore',() => {
+
     const tasks = ref([
         {id: 1, title: "homework", body: 'do homework'},
         {id: 2, title: "cleaning", body: 'do debug'},
         {id: 3, title: "learning", body: 'do js'},
     ]);
+    const taskInLocalStorage = localStorage.getItem("tasks")
+    if (taskInLocalStorage){
+        tasks.value = JSON.parse(taskInLocalStorage)._value;
+        console.log(JSON.parse(taskInLocalStorage))
+    }
     const title = ref('');
     const body = ref('');
     const addTask = () => {
@@ -23,32 +29,13 @@ export const useTaskStore = defineStore('taskStore',() => {
     };
     const removeTask = task => {
         console.log("removeTask")
-        let el = tasks.value.findIndex(item => item.id === task.id)
-        console.log("el:",el)
-        tasks.value.splice(el, 1)
-        console.log(task)
-        console.log("после", tasks.value)
+        tasks.value = tasks.value.filter(item => item.id !== task.id)
     };
-    return{removeTask, addTask, tasks, title,body}
-    // const addTask = computed(()=>{
-    //     let newTask = {
-    //         id: Date.now(),
-    //         title: title.value,
-    //         body: body.value
-    //     }
-    //     console.log(newTask)
-    //     tasks.value.push(newTask)
-    //     console.log("addTask")
-    //     title.value=''
-    //     body.value=''
-    // })
+    watch(()=> tasks, (state) => {
+        localStorage.setItem('tasks', JSON.stringify(state))
+    },{deep: true})
 
-    // const removeTask = computed(()=>{
-    //     console.log("removeTask")
-    //     console.log("до", tasks.value)
-    //     tasks.value = tasks.value.filter(item => item.id !== task.id)
-    //     console.log("после", tasks.value)
-    // })
+    return{removeTask, addTask, tasks, title,body}
 
 
 })
