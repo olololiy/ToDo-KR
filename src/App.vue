@@ -20,15 +20,24 @@
         ADD
       </v-btn>
     </v-form>
-    <div class="task_list" v-for="task of taskStore.tasks">
-      <v-card :title="task.title" :text="task.body" variant="outlined">
+    <h4>в работе</h4>
+    <div class="task_list" v-for="task of taskStore.tasks" >
+      <v-card :title="task.title" :text="task.body" variant="outlined" v-if="!task.status">
         <v-card-actions>
-          <v-btn>Done</v-btn>
+          <v-btn @click="taskStore.removeTask(task)">Done</v-btn>
           <v-btn @click="taskStore.removeTask(task)">Delete</v-btn>
         </v-card-actions>
       </v-card>
     </div>
-
+    <h4>архив</h4>
+    <div class="task_list" v-for="task of taskStore.tasks" >
+      <v-card :title="task.title" :text="task.body" variant="outlined" v-if="task.status">
+        <v-card-actions>
+          <v-btn @click="taskStore.removeTask(task)">Done</v-btn>
+          <v-btn @click="taskStore.removeTask(task)">Delete</v-btn>
+        </v-card-actions>
+      </v-card>
+    </div>
   </main>
 </template>
 
