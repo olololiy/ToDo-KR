@@ -14,12 +14,10 @@
           v-model="taskStore.body"
       >
       </v-text-field>
-      <v-text-field label="First name"
+      <v-text-field label="date"
                     type="date"
-                    v-model="taskStore.today"
-                    :min="taskStore.today"
-
-
+                    v-model="taskStore.enddate"
+                    :min="todayday"
       >
 
       </v-text-field>
@@ -36,6 +34,7 @@
     <div class="task_list" v-for="task of taskStore.tasks">
       <v-card :title="task.title" :text="task.body" variant="outlined" v-if="!task.done">
         <v-card-actions>
+          <v-card-title>{{task.enddate}}</v-card-title>
           <v-btn @click="taskStore.makeDone(task)">Done</v-btn>
           <v-btn @click="taskStore.removeTask(task)">Delete</v-btn>
         </v-card-actions>
@@ -58,6 +57,9 @@ import {useTaskStore} from "@/stores/StoreTask";
 
 const taskStore = useTaskStore()
 const todayday = new Date().toISOString().slice(0, 10)
+const enddate = () =>{
+  console.log(modelValue)
+}
 </script>
 
 <style>
