@@ -17,7 +17,7 @@
       <v-text-field label="First name"
                     type="date"
                     v-model="taskStore.today"
-                    :min="todayday.today"
+                    :min="taskStore.today"
 
 
       >
