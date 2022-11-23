@@ -8,15 +8,17 @@ export const useTaskStore = defineStore('taskStore',() => {
         {id: 2, title: "cleaning", body: 'do debug', done: false},
         {id: 3, title: "learning", body: 'do js', done: false},
     ]);
-    const taskInLocalStorage = localStorage.getItem("tasks")
-    if (taskInLocalStorage){
-        tasks.value = JSON.parse(taskInLocalStorage)._value;
-        console.log(JSON.parse(taskInLocalStorage))
-    }
+    // const taskInLocalStorage = localStorage.getItem("tasks")
+    // if (taskInLocalStorage){
+    //     tasks.value = JSON.parse(taskInLocalStorage)._value;
+    //     console.log(JSON.parse(taskInLocalStorage))
+    // }
 
     const title = ref('');
     const body = ref('');
     const status = ref(false)
+    const today = ref(new Date().toISOString().slice(0, 10))
+    console.log(today.value)
     const addTask = () => {
         let newTask = {
             id: Date.now(),
@@ -38,9 +40,9 @@ export const useTaskStore = defineStore('taskStore',() => {
         task.done = true
         console.log(tasks.value)
     }
-    watch(()=> tasks, (state) => {
-        localStorage.setItem('tasks', JSON.stringify(state))
-    },{deep: true})
+    // watch(()=> tasks, (state) => {
+    //     localStorage.setItem('tasks', JSON.stringify(state))
+    // },{deep: true})
 
     return{removeTask, addTask, makeDone, tasks, title,body}
 
