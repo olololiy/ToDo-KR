@@ -35,8 +35,8 @@ export const useTaskStore = defineStore('taskStore',() => {
         if (strEnddate < strToday){
             alert("введите дату не позднее сегодня")
         }
-         else if(today){
-
+         else if(!title.value || !body.value){
+            alert("заполните поля")
         }
        else {
             console.log("newTask: ", newTask)
