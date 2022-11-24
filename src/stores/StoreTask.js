@@ -29,12 +29,23 @@ export const useTaskStore = defineStore('taskStore',() => {
             done: false,
             enddate: enddate.value
         }
-        console.log("newTask: ",newTask)
-        tasks.value.push(newTask)
-        console.log("addTask")
-        title.value=''
-        body.value=''
-        enddate.value=''
+        console.log("before", today.value)
+        let strToday = today.value.replace(/\-/g, '');
+        let strEnddate = enddate.value.replace(/\-/g, '');
+        if (strEnddate < strToday){
+            alert("введите дату не позднее сегодня")
+        }
+         else if(today){
+
+        }
+       else {
+            console.log("newTask: ", newTask)
+            tasks.value.push(newTask)
+            console.log("addTask")
+            title.value = ''
+            body.value = ''
+            enddate.value = ''
+        }
     };
     const removeTask = task => {
         console.log("removeTask")
