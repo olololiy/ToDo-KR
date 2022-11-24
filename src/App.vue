@@ -30,7 +30,7 @@
         ADD
       </v-btn>
     </v-form>
-    <h4>в работе</h4>
+    <h4 v-if="taskStore.tasks.find(task => task.done === false)">в работе</h4>
     <div class="task_list" v-for="task of taskStore.tasks">
       <v-card :title="task.title" :text="task.body" variant="outlined" v-if="!task.done">
         <v-card-actions>
@@ -40,7 +40,7 @@
         </v-card-actions>
       </v-card>
     </div>
-    <h4>архив</h4>
+    <h4 v-if="taskStore.tasks.find(task => task.done === true)">архив</h4>
     <div class="task_list" v-for="task of taskStore.tasks">
       <v-card :title="task.title" :text="task.body" variant="outlined" v-if="task.done">
         <v-card-actions>
